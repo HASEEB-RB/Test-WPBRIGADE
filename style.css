@@ -1,0 +1,1350 @@
+/* ============================================================
+   ADIDAS PROJECT — CONSOLIDATED STYLESHEET
+   Structure:
+   1. Design Tokens (CSS variables)
+   2. Reset & Base
+   3. Layout (header, main, footer, grid)
+   4. Components
+      4a. Alert / Promo Bar
+      4b. Navigation
+      4c. Post-Navbar
+      4d. Hero Slider
+      4e. Video Modal
+      4f. Product Slider
+      4g. Content Cards (.content-card base + modifiers)
+      4h. Events Sidebar
+      4i. Contact Form
+   5. Utilities (.dot, .pagination)
+   6. Responsive — Tablet  (min-width: 768px)
+   7. Responsive — Desktop (min-width: 1280px)
+============================================================ */
+
+
+/* ── 1. DESIGN TOKENS ──────────────────────────────────────── */
+:root {
+    /* Brand colours — change here, updates everywhere */
+    --brand-darkest:  #01241a;
+    --brand-dark:     #175a39;
+    --brand-mid:      #2e844b;
+    --brand-accent:   #2a7a4d;
+
+    /* Pattern overlay — used across many backgrounds */
+    --pattern:        url(Slicing/pattern-bg.png);
+
+    /* Typography */
+    --font-primary:   "Oswald", sans-serif;
+    --font-body:      "Roboto", sans-serif;
+
+    /* Spacing */
+    --section-px-desktop: 9rem;
+}
+
+/* Accessibility: Hide labels visually but keep them readable for screen readers */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+
+/* ── 2. BOILERPLATE CODE ───────────────────────────────────────── */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* GLOBAL CONTAINER - SOLVES STRETCHING ISSUE */
+.container {
+    /* Adjusted from 1920px to a better max-width for readability */
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+}
+
+body {
+    font-family: var(--font-primary);
+    background-color: var(--brand-darkest);
+    color: #fff;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+
+/* ── 3. LAYOUT ─────────────────────────────────────────────── */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    overflow: visible;
+}
+
+main {
+    background-image: var(--pattern);
+}
+
+/* Grid wrapper — contains product slider, cards, sidebar */
+.grid-wrapper {
+    background-color: var(--brand-darkest);
+    background-image: var(--pattern);
+    display: grid;
+    gap: 30px;
+    padding: 15px;
+    /* Mobile: single column, explicit order */
+    grid-template-areas:
+        "slider"
+        "triple"
+        "special"
+        "sidebar";
+}
+
+/* Grid area assignments */
+.area-slider  { grid-area: slider;  margin: 1rem 0; }
+.area-triple  { grid-area: triple; }
+.area-special { grid-area: special; display: flex; flex-direction: column; }
+.events-sidebar { grid-area: sidebar; }
+
+
+/* ── 4a. ALERT / PROMO BAR ─────────────────────────────────── */
+.promo-bar {
+    position: relative;
+    background-color: #fff;
+    color: #000;
+    padding: 1rem 3rem 1rem 1rem;
+    min-height: 4.5rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 100;
+}
+
+.alert-content {
+    text-align: start;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.9;
+    width: 100%;
+}
+
+.alert-link {
+    color: var(--brand-accent);
+}
+
+.close-btn {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--brand-accent);
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+
+/* ── 4b. NAVIGATION ─────────────────────────────────────────*/
+.nav-container {
+    height: 6.25rem;
+    width: 100%;
+    background-color: var(--brand-darkest);
+    background-image: var(--pattern);
+}
+
+.logobar {
+    height: 60%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+}
+
+.logo img {
+    width: 5.75rem;
+}
+
+.menu-icon {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn {
+    height: 100%;
+    width: 50%;
+    border: none;
+    color: #fff;
+    padding: .4rem;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 500;
+    font-family: var(--font-primary);
+    background-image: var(--pattern);
+}
+
+#btn1 {
+    border-right: 1.5px solid #fff;
+    background-color: var(--brand-mid);
+}
+
+#btn2 {
+    background-color: var(--brand-dark);
+}
+
+/* Mobile nav — hidden by default, toggled by JS */
+#navbar {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 100;
+}
+
+#navbar.open {
+    height: auto;
+    width: 100%;
+    background-color: var(--brand-dark);
+    background-image: var(--pattern);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-bottom: 1.25rem;
+    position: relative;
+    border: 2PX SOLID rgb(0, 0, 0);
+}
+
+nav ul {
+    list-style: none;
+}
+
+nav ul li span {
+    height: 4rem;
+    width: 100%;
+    font-size: .75rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 1rem;
+    margin-left: 1rem;
+    transition: background-color 0.3s ease-in-out;
+}
+
+nav ul li span:hover {
+    background-color: var(--brand-mid);
+    clip-path: polygon(0 0, 100% 0, calc(100% - 10%) 100%, 0 100%);
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    font-family: var(--font-primary);
+    display: flex;
+    justify-content: flex-start;
+}
+
+.search-bar {
+    min-height: 2.4rem;
+    width: calc(100% - 2rem);
+    padding: 0 10px;
+    margin: .5rem 1rem 1rem 1rem;
+    order: -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-image: var(--pattern);
+    background-color: var(--brand-darkest);
+}
+
+#searchInputBar {
+    background-color: transparent;
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    font-weight: 400;
+    color: #fff;
+    border: none;
+    outline: none;
+    height: 90%;
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+#searchInputBar::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Remove native 'x' mark from search input */
+#searchInputBar::-webkit-search-cancel-button,
+#searchInputBar::-webkit-search-decoration {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* Prevent browser autofill from changing the background color */
+#searchInputBar:-webkit-autofill {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: #fff;
+}
+
+#searchButton {
+    background-color: var(--brand-darkest);
+    background-image: var(--pattern);
+    height: 100%;
+    width: 10%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Mobile-only: post-navbar hidden until tablet */
+.post-navbar {
+    display: none;
+}
+
+
+/* ── 4c. POST-NAVBAR ───────────────────────────────────────── */
+/* Shown at tablet+ via responsive section below */
+
+
+/* ── 4d. HERO SLIDER ───────────────────────────────────────── */
+.hero-slider {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--brand-darkest);
+    background-image: url(Slicing/hero-bg.png);
+    background-blend-mode: overlay;
+    background-size: cover;
+    background-position: center;
+    color: white;
+    width: 100%;
+}
+
+.slider-container {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+}
+
+.slide {
+    min-width: 100%;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    background-image: var(--pattern);
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.text-side {
+    order: 2;
+    text-align: left;
+}
+
+.text-side h1 {
+    font-size: 30px;
+    line-height: 1.2;
+    font-weight: 500;
+    margin: 1rem 0;
+}
+
+.text-side p {
+    font-family: var(--font-body);
+    font-size: .9rem;
+    line-height: 1.4;
+    font-weight: 400;
+    opacity: .9;
+    margin-bottom: 1rem;
+}
+
+.video-side {
+    order: 1;
+    width: 100%;
+}
+
+.thumb-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.thumb-wrapper img {
+    width: 100%;
+}
+
+.play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(1, 36, 26, 0.74);
+    color: white;
+    padding: 15px 20px;
+    cursor: pointer;
+    border-radius: 50%;
+    border: none;
+}
+
+/* Prev / Next arrow buttons */
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    display: none; /* shown on desktop only */
+    z-index: 10;
+}
+
+.prev-btn { left: 20px; }
+.next-btn { right: 20px; }
+
+
+/* ── 5. UTILITIES — PAGINATION / DOTS ──────────────────────── */
+/* Hero and product sliders */
+.pagination {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    z-index: 20;
+}
+
+.hero-slider .pagination {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.dot {
+    width: 14px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.dot:hover {
+    transform: scale(1.15);
+}
+
+.dot.active {
+    background: #ffffff;
+}
+
+/* Product slider pagination — positioned relative */
+#sliderPagination {
+    position: relative;
+    justify-content: center;
+    top: 2rem;
+}
+
+.white-line {
+    margin: 4rem 0 1rem;
+}
+
+
+/* ── 4e. VIDEO MODAL ───────────────────────────────────────── */
+/* Native <dialog> element — replaces the old div-based modal */
+#videoModal {
+    border: none;
+    background: rgba(0, 0, 0, 0.9);
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    padding: 0;
+}
+
+#videoModal::backdrop {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+#videoModal iframe {
+    width: 80%;
+    height: 70%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    line-height: 1;
+}
+
+
+/* ── 4f. PRODUCT SLIDER ────────────────────────────────────── */
+.p-slider-container {
+    position: relative;
+    width: 100%;
+}
+
+.p-slider-wrapper {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+}
+
+.p-slider {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.p-slide {
+    min-width: 100%;
+    margin: 0;
+    background-color: rgba(1, 82, 44, 0.31);
+    background-image: var(--pattern);
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+    min-height: 22rem;
+}
+
+.p-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    padding: .35rem;
+    box-sizing: border-box;
+}
+
+.p-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    display: none; /* shown on desktop only */
+    z-index: 10;
+}
+
+.p-prev-btn { left: -40px; }
+.p-next-btn { right: -30px; }
+
+
+/* ── 4g. CONTENT CARDS ─────────────────────────────────────── */
+.content-card {
+    width: 100%;
+    background-color: var(--brand-mid);
+    background-image: var(--pattern);
+}
+
+.content-card img {
+    width: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.content-card h4 {
+    margin: 1rem .75rem .5rem;
+    font-size: 22px;
+    line-height: 1.4;
+    font-weight: 500;
+}
+
+.content-card p {
+    margin: 0 .75rem 1rem;
+    font-size: 14px;
+    line-height: 1.2;
+    font-family: var(--font-body);
+    opacity: .9;
+}
+
+/* Modifier: news card (triple grid) */
+.content-card--news {
+    height: 100%;
+    min-height: 22.25rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.content-card--news img {
+    height: 12rem;
+    flex-shrink: 0;
+}
+
+.content-card--news a {
+    background-color: var(--brand-dark);
+    background-image: var(--pattern);
+    color: white;
+    width: 100%;
+    min-height: 3rem;
+    padding: .5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: auto;
+    flex-shrink: 0;
+}
+
+/* Modifier: special / feature card */
+.content-card--special {
+    height: 100%;
+    min-height: 22rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-card--special img {
+    height: 14rem;
+}
+
+/* Second special card has alternate background */
+.content-card--special.s2 {
+    background-color: var(--brand-dark);
+}
+
+/* Triple grid layout */
+.triple-grid {
+    display: grid;
+    gap: 25px;
+    grid-template-columns: 1fr;
+}
+
+
+/* ── 4h. EVENTS SIDEBAR ────────────────────────────────────── */
+.events-sidebar {
+    background: var(--brand-accent);
+    background-image: var(--pattern);
+    margin-top: .75rem;
+}
+
+.events-sidebar h2 {
+    background: var(--brand-dark);
+    background-image: var(--pattern);
+    font-weight: 500;
+    padding: 8px 20px;
+}
+
+.events-sidebar ul {
+    list-style: none;
+    padding: 20px;
+}
+
+.events-sidebar li {
+    color: white;
+    margin: 10px 0;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 10px;
+    text-decoration: underline;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* Date badge */
+.events-sidebar li span {
+    color: var(--brand-accent);
+    background: white;
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    height: 2.6rem;
+    width: 2.6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.events-sidebar li small {
+    text-decoration: none;
+    display: inline-block;
+    font-family: var(--font-body);
+    font-weight: 400;
+    opacity: .9;
+}
+
+
+/* ── 4i. CONTACT FORM ──────────────────────────────────────── */
+.contact-section {
+    padding: 40px 20px;
+    background-color: var(--brand-dark);
+    background-image: var(--pattern);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: none;
+}
+
+/* Custom radio buttons */
+input[type="radio"] {
+    display: none;
+}
+
+input[type="radio"] + label {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 20px;
+}
+
+input[type="radio"] + label::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    background: #fff;
+}
+
+input[type="radio"]:checked + label::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    background: var(--brand-mid);
+    border-radius: 50%;
+}
+
+/* Dropdown with custom arrow */
+.input-row {
+    position: relative;
+}
+
+.input-row select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 13px 95px 13px 15px;
+    width: 100%;
+    background-image: url(Slicing/dropdown-arrow.png);
+    background-repeat: no-repeat;
+    background-position: right 20px center;
+    background-color: #fff;
+}
+
+.gender-row {
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 20px 0;
+}
+
+.gender-row legend {
+    margin-bottom: .35rem;
+}
+
+.heading {
+    margin-bottom: .35rem;
+    margin-top: -1.25rem;
+}
+
+.bullets {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.msg-container {
+    display: flex;
+    flex-direction: column;
+    grid-column: 1 / span 2;
+}
+
+.contact-form textarea {
+    height: 100px;
+}
+
+.submit-btn {
+    font-family: var(--font-primary);
+    background-color: rgba(1, 36, 26, 0.65);
+    color: white;
+    padding: 8px 50px;
+    border: none;
+    cursor: pointer;
+    display: block;
+    margin: 10px auto;
+}
+
+
+/* ── FOOTER ────────────────────────────────────────────────── */
+footer {
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 12px;
+    background-image: var(--pattern);
+}
+
+.footer-links a {
+    font-size: 1rem;
+    padding: 1rem;
+    color: #fff;
+    text-decoration: none;
+}
+
+footer p {
+    font-family: var(--font-body);
+}
+
+.social-icons {
+    margin: 20px 0;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+
+/* ============================================================
+   6. RESPONSIVE — TABLET (min-width: 768px)
+============================================================ */
+@media (min-width: 768px) {
+
+    /* Alert */
+    .promo-bar {
+        min-height: 50px;
+        font-size: 14px;
+    }
+
+    .alert-content {
+        text-align: center;
+    }
+
+    .close-btn {
+        right: 1.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    /* Nav container */
+    .nav-container {
+        position: relative;
+        height: 60px;
+        padding: 0;
+    }
+
+    .menu-icon {
+        display: none;
+    }
+
+    .logobar {
+        height: 50px;
+    }
+
+    .logo img {
+        width: 7rem;
+        margin-top: .9rem;
+    }
+
+    .buttons {
+        position: absolute;
+        top: 20%;
+        right: 2%;
+        height: 35px;
+        transform: skew(-16deg);
+        margin-left: .5rem;
+    }
+
+    .btn span {
+        display: inline-block;
+        transform: skew(16deg);
+    }
+
+    .btn {
+        width: 8rem;
+        font-size: .9rem;
+        font-weight: 500;
+        margin-left: .5rem;
+        padding-bottom: 2rem;
+    }
+
+    #btn1 {
+        border: none;
+    }
+
+    /* Navbar — horizontal at tablet+ */
+    #navbar {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        height: 50px;
+        width: 100%;
+        padding: 0 .5rem;
+        background-color: var(--brand-dark);
+        background-image: var(--pattern);
+    }
+
+    nav { order: 0; }
+
+    nav ul {
+        height: 50px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    nav ul li span {
+        height: 50px;
+        padding: 0 0 0 .75rem;
+        margin: 0 .75rem 0 0;
+    }
+
+    nav ul li span:hover {
+        background-color: var(--brand-mid);
+        clip-path: none;
+        transform: skew(-15deg);
+    }
+
+    nav ul li span:hover a {
+        color: #fff;
+        transform: skew(15deg);
+    }
+
+    nav ul li a {
+        font-size: 14px;
+    }
+
+    .search-bar {
+        order: 1;
+        width: 12.5rem;
+        height: 2rem;
+        position: relative;
+        right: 0.1%;
+        margin-bottom: .5rem;
+    }
+
+    /* Post-navbar — visible at tablet+ */
+    .post-navbar {
+        height: 65px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: var(--brand-mid);
+        background-image: var(--pattern);
+        padding-left: .5rem;
+    }
+
+    .post-navbar h1 {
+        font-weight: 500;
+    }
+
+    .partnership-badge {
+        height: inherit;
+        width: 19.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background-color: #fff;
+        padding: .5rem .5rem .5rem 2rem;
+        color: var(--brand-mid);
+        clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%);
+    }
+
+    .partnership-badge figcaption {
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--brand-mid);
+        margin: .25rem;
+    }
+
+    .partnership-badge img {
+        width: 10rem;
+    }
+
+    /* Hero slider */
+    .hero-content {
+        min-height: 28.125rem;
+        padding: 2rem 0;
+        flex-direction: row;
+        justify-content: center;
+        gap: 110px;
+        text-align: left;
+    }
+
+    .text-side {
+        order: 1;
+        width: 50%;
+        text-align: left;
+        
+    }
+
+    .video-side {
+        order: 2;
+        width: 50%;
+
+    }
+
+    .thumb-wrapper {
+        width: 60%;
+        display: flex;
+        align-items: center;
+        justify-content: center
+    }
+
+    .thumb-wrapper img {
+        width:100%;
+    }
+
+   .play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 15px 20px;
+    cursor: pointer;
+    border-radius: 50%;
+    border: none;
+}
+
+  
+
+    /* Grid — 2 columns at tablet */
+    .grid-wrapper {
+        /* FIXED: was 70% 30% which breaks with gap — fr units are gap-aware */
+        grid-template-columns: 2fr 1fr;
+        gap: 20px;
+        row-gap: 0;
+        padding-right: 10px;
+        grid-template-areas:
+            "slider  sidebar"
+            "triple  ."
+            "special ."
+            "contact .";
+    }
+
+    .area-slider {
+        margin: 1rem 0 0;
+    }
+
+    .p-slider-wrapper {
+        height: 10rem;
+    }
+
+    .p-slider {
+        gap: 1rem;
+    }
+
+    .p-slide {
+        min-width: calc((100% - 2rem) / 3);
+    }
+
+    .p-slide img {
+        height: 10rem;
+    }
+
+    #sliderPagination {
+        top: 1.5rem;
+    }
+
+    .white-line {
+        margin: 3rem 0 0;
+    }
+
+    /* Triple grid — 2 columns at tablet */
+    .area-triple {
+        margin: -2rem 0 1rem;
+    }
+
+    .triple-grid {
+        grid-template-columns: 1fr 1fr;
+        height: auto;
+    }
+
+    .content-card h4 {
+        font-size: 16px;
+    }
+
+    .content-card p {
+        font-size: 12px;
+    }
+
+    /* Special cards — horizontal layout at tablet */
+    .area-special {
+        margin: 1.5rem 0 1rem;
+    }
+
+    .content-card--special {
+        min-height: 12rem;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .content-card--special .info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 1.5rem;
+        flex: 1;
+    }
+
+    .content-card--special h4 {
+        font-size: 17px;
+        font-weight: 400;
+        margin: 0 0 0.5rem 0;
+    }
+
+    .content-card--special p {
+        font-size: 12px;
+        font-weight: 400;
+        margin: 0;
+    }
+
+    .area-special .s1 img {
+        clip-path: polygon(0 0, 100% 0, 80% 100%, 0 100%);
+    }
+
+    .area-special .s2 {
+        flex-direction: row-reverse;
+    }
+
+    .area-special .s2 img {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 20% 100%);
+    }
+
+    .area-special img {
+        width: 53%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    /* Events sidebar */
+    .events-sidebar {
+        margin-top: 1rem;
+        margin-right: 1.5rem;
+    }
+
+    .events-sidebar ul {
+        padding: 10px;
+    }
+
+    .events-sidebar li {
+        margin: 6px 0;
+        gap: 8px;
+        font-weight: 400;
+    }
+
+    /* Contact form — 2-column grid at tablet */
+    .contact-section {
+        padding: 60px 40px;
+    }
+
+    .contact-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px 30px;
+        max-width: 800px;
+        width: 100%;
+    }
+
+    .gender-row,
+    .msg-container,
+    .submit-btn {
+        grid-column: span 2;
+    }
+}
+
+
+/* ============================================================
+   7. RESPONSIVE — DESKTOP (min-width: 1220px)
+============================================================ */
+@media (min-width: 1220px) {
+
+    /* Nav container */
+    .nav-container {
+        padding: 0 6rem;
+        height: 60px;
+    }
+
+    .logo img {
+        width: 8rem;
+        margin-top: .8rem;
+    }
+
+    .buttons {
+        right: 10%;
+    }
+
+    .btn {
+        width: 9rem;
+    }
+
+    /* Navbar */
+    #navbar {
+        height: 60px;
+        padding: 0 0 0 7rem;
+    }
+
+    nav ul li span {
+        height: 60px;
+        padding: 0 0 0 1.35rem;
+        margin: 0 1.35rem 0 0;
+    }
+
+    nav ul li a {
+        font-size: 16px;
+    }
+
+    .search-bar {
+        width: 15rem;
+        height: 2.25rem;
+        position: relative;
+        right: 10%;
+        /* margin: 0 0 0 3rem; */
+    }
+
+    /* Post-navbar */
+    .post-navbar {
+        height: 85px;
+        padding-left: 7.25rem;
+    }
+
+    .post-navbar h1 {
+        font-size: 3rem;
+    }
+
+    .partnership-badge {
+        width: 30rem;
+        height: inherit;
+        padding: 0 .5rem 0.25rem 3rem;
+        clip-path: polygon(6% 0, 100% 0, 100% 100%, 0 100%);
+        align-items: flex-start;
+    }
+
+    .partnership-badge figcaption {
+        padding-left: 3rem;
+        padding-top: .25rem;
+        font-size: 13px;
+    }
+
+    .partnership-badge img {
+        width: 12rem;
+    }
+
+    /* Hero */
+    .hero-content {
+        justify-content: center;
+        gap: 8rem;
+    }
+
+    .text-side {
+        width: 35%;
+    }
+
+    .video-side {
+        width: 30%;
+    }
+
+    /* Show arrow buttons on desktop */
+    .nav-btn {
+        display: block !important;
+    }
+
+    .p-nav-btn {
+        display: block;
+    }
+
+    /* Grid — constrained to content width on desktop */
+    .grid-wrapper {
+        margin: 0 var(--section-px-desktop);
+        gap: 30px;
+    }
+
+    .area-slider {
+        margin: 1rem 1rem 0 0;
+    }
+
+    .triple-grid {
+        grid-template-columns: repeat(3, 1fr);
+        height: auto;
+    }
+
+    /* Product slides — 4 visible at desktop */
+    .p-slide {
+        min-width: calc((100% - 3rem) / 4);
+    }
+
+    /* Special cards */
+    .area-special .s1 img {
+        clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+    }
+
+    .area-special .s2 img {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 15% 100%);
+    }
+
+    .area-special img {
+        width: 63%;
+    }
+}

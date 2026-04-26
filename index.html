@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adidas Project</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- ── HEADER ──────────────────────────────────────────── -->
+      <header>
+        <!-- SEMANTIC: was <div class="promo-bar"> — alerts are announcements -->
+        <div role="alert" class="promo-bar" id="topAlert">
+          <div class="alert-content">
+            <span>LIVE RACE STREAM FROM GATOR NATIONALS IN SARASOTA, FL /</span>
+            <a href="#" class="alert-link">WATCH NOW</a>
+          </div>
+          <button
+            class="close-btn"
+            onclick="closeAlert()"
+            aria-label="Close announcement"
+          >
+            <img src="Slicing/x-mark.png" alt="" />
+          </button>
+        </div>
+
+        <div class="nav-container">
+          <div class="logobar">
+            <div class="logo">
+              <img src="Slicing/logo.png" alt="Adidas" />
+            </div>
+            <button
+              class="menu-icon"
+              id="menuToggle"
+              aria-label="Open navigation menu"
+              aria-expanded="false"
+              aria-controls="navbar"
+            >
+              <img src="Slicing/burger-icon.png" alt="" />
+            </button>
+          </div>
+          <div class="buttons">
+            <button class="btn" id="btn1"><span>MEMBERSHIP</span></button>
+            <button class="btn" id="btn2"><span>ACCOUNT</span></button>
+          </div>
+        </div>
+
+        <div id="navbar">
+          <nav aria-label="Main navigation">
+            <ul>
+              <li>
+                <span><a href="#">OUR TRACKS</a></span>
+              </li>
+              <li>
+                <span><a href="#">FIND EVENTS</a></span>
+              </li>
+              <li>
+                <span><a href="#">TRACK MAP</a></span>
+              </li>
+              <li>
+                <span><a href="#">SHOP</a></span>
+              </li>
+              <li>
+                <span><a href="#">ABOUT US</a></span>
+              </li>
+            </ul>
+          </nav>
+
+          <form
+            class="search-bar"
+            id="searchForm"
+            role="search"
+            action="javascript:void(0);"
+          >
+            <label for="searchInputBar" class="visually-hidden"
+              >Search the site</label
+            >
+            <input
+              id="searchInputBar"
+              type="search"
+              placeholder="SEARCH"
+              aria-label="Search the site"
+            />
+            <button id="searchButton" type="submit" aria-label="Submit search">
+              <img src="Slicing/search-icon.png" alt="" />
+            </button>
+          </form>
+        </div>
+
+        <div class="post-navbar">
+          <h1>HOMEPAGE</h1>
+          <figure class="partnership-badge">
+            <figcaption>PARTNERSHIP BY</figcaption>
+            <img src="Slicing/reebok-logo.png" alt="Reebok" />
+          </figure>
+        </div>
+      </header>
+
+      <!-- ── MAIN ────────────────────────────────────────────── -->
+      <main>
+        <section class="hero-slider" aria-label="Featured content">
+          <div class="slider-container" id="slider" aria-live="polite">
+            <!-- Slides are injected here by script.js via CONFIG.heroSlides -->
+          </div>
+
+          <button
+            class="nav-btn prev-btn"
+            id="prevBtn"
+            aria-label="Previous slide"
+          >
+            <img src="Slicing/hero-slider-leftt-arrow.png" alt="" />
+          </button>
+          <button class="nav-btn next-btn" id="nextBtn" aria-label="Next slide">
+            <img src="Slicing/hero-slider-right-arrow.png" alt="" />
+          </button>
+
+          <div
+            class="pagination"
+            id="pagination"
+            role="tablist"
+            aria-label="Slide navigation"
+          ></div>
+        </section>
+
+        <dialog id="videoModal" aria-label="Video player">
+          <button class="close" onclick="closeModal()" aria-label="Close video">
+            &times;
+          </button>
+          <iframe
+            id="videoFrame"
+            src=""
+            frameborder="0"
+            allowfullscreen
+            title="Embedded video"
+          ></iframe>
+        </dialog>
+
+        <div class="grid-wrapper">
+          <!-- Product Slider -->
+          <section class="area-slider" aria-label="Product showcase">
+            <div class="p-slider-container">
+              <div class="p-slider-wrapper">
+                <div class="p-slider" id="pSlider">
+                  <!-- Slides injected by script.js via CONFIG.productSlides -->
+                </div>
+              </div>
+              <button
+                class="p-nav-btn p-prev-btn"
+                id="pPrevBtn"
+                aria-label="Previous products"
+              >
+                <img src="Slicing/hero-slider-leftt-arrow.png" alt="" />
+              </button>
+              <button
+                class="p-nav-btn p-next-btn"
+                id="pNextBtn"
+                aria-label="Next products"
+              >
+                <img src="Slicing/hero-slider-right-arrow.png" alt="" />
+              </button>
+            </div>
+            <div
+              class="pagination"
+              id="sliderPagination"
+              role="tablist"
+              aria-label="Product slide navigation"
+            ></div>
+            <div class="white-line">
+              <hr />
+            </div>
+          </section>
+
+          <!-- News Cards -->
+          <section class="area-triple" aria-label="Latest news">
+            <div class="triple-grid">
+              <!-- Cards are injected by script.js via CONFIG.newsCards -->
+            </div>
+          </section>
+
+          <!-- Special Feature Cards -->
+          <section class="area-special" aria-label="Featured stories">
+            <!-- Cards injected by script.js via CONFIG.specialCards -->
+          </section>
+
+          <!-- Events Sidebar -->
+          <aside class="events-sidebar" aria-label="Upcoming events">
+            <h2>EVENTS</h2>
+            <ul>
+              <!-- Events injected by script.js via CONFIG.events -->
+            </ul>
+          </aside>
+        </div>
+        <!-- /.grid-wrapper -->
+
+        <!-- Contact Form -->
+        <section class="contact-section" aria-label="Contact us">
+          <h2>GET IN TOUCH WITH US</h2>
+          <form class="contact-form">
+            <div class="form-row">
+              <label for="name">NAME</label>
+              <input
+                type="text"
+                placeholder="Name"
+                id="name"
+                name="name"
+                autocomplete="name"
+                required
+              />
+            </div>
+
+            <div class="form-row">
+              <label for="email">EMAIL</label>
+              <input
+                type="email"
+                placeholder="Email"
+                id="email"
+                name="email"
+                autocomplete="email"
+                required
+              />
+            </div>
+
+            <div class="form-row">
+              <label for="country">COUNTRY</label>
+              <!-- FIXED: select had name="" — won't submit without a name -->
+              <div class="input-row">
+                <select name="country" id="country">
+                  <option value="us">USA</option>
+                  <option value="pk">PAKISTAN</option>
+                  <option value="ir">IRAN</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <label for="state">STATE</label>
+              <div class="input-row">
+                <!-- FIXED: select had name="" — won't submit without a name -->
+                <select name="state" id="state">
+                  <option value="ca">California</option>
+                  <option value="ny">New York</option>
+                  <option value="tx">Texas</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Gender radio group — fieldset/legend is correct for grouped inputs -->
+            <fieldset class="gender-row">
+              <legend class="heading">GENDER</legend>
+              <div class="bullets">
+                <input type="radio" name="gender" id="male" value="male" />
+                <label for="male">MALE</label>
+                <input type="radio" name="gender" id="female" value="female" />
+                <label for="female">FEMALE</label>
+                <input type="radio" name="gender" id="other" value="other" />
+                <label for="other">OTHER</label>
+              </div>
+            </fieldset>
+
+            <div class="msg-container form-row">
+              <label for="message">MESSAGE</label>
+              <!-- FIXED: was <textarea>MESSAGE</textarea> — that text becomes the submitted value -->
+              <textarea
+                id="message"
+                name="message"
+                placeholder="Your message here..."
+                required
+              ></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">SUBMIT</button>
+          </form>
+        </section>
+      </main>
+
+      <!-- ── FOOTER ──────────────────────────────────────────── -->
+      <footer>
+        <!-- SEMANTIC: footer nav links should be in a <nav> landmark -->
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="#">OUR TRACKS</a> / <a href="#">FIND EVENTS</a> /
+          <a href="#">TRACK MAP</a> / <a href="#">SHOP</a> /
+          <a href="#">ABOUT US</a>
+        </nav>
+
+        <div class="social-icons" aria-label="Social media links">
+          <a href="https://www.facebook.com/" aria-label="Facebook">
+            <img src="Slicing/facebook-icon.png" alt="Facebook" />
+          </a>
+          <a href="https://www.twitter.com/" aria-label="Twitter / X">
+            <img src="Slicing/twitter-icon.png" alt="Twitter" />
+          </a>
+          <a href="https://www.instagram.com/" aria-label="Instagram">
+            <img src="Slicing/instagram-icon.png" alt="Instagram" />
+          </a>
+          <a href="https://www.linkedin.com/" aria-label="LinkedIn">
+            <img src="Slicing/linkedin-icon.png" alt="LinkedIn" />
+          </a>
+        </div>
+
+        <p>&copy; Copyright 2020 Adidas</p>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
